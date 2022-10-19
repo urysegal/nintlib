@@ -7,7 +7,7 @@
 
 /******************************************************************************/
 
-double box_nd ( double func ( int dim_num, double x[] ), int dim_num, 
+std::complex<double> box_nd ( eval_func func, int dim_num,
   int order, double xtab[], double weight[], int *eval_num )
 
 /******************************************************************************/
@@ -65,7 +65,7 @@ double box_nd ( double func ( int dim_num, double x[] ), int dim_num,
   int dim;
   int *indx;
   int k;
-  double result;
+  std::complex<double> result;
   double w;
   double *x;
 
@@ -316,7 +316,7 @@ double monte_carlo_nd ( double func ( int dim_num, double x[] ), int dim_num,
 }
 /******************************************************************************/
 
-double p5_nd ( double func ( int dim_num, double x[] ), int dim_num, 
+double p5_nd ( double func ( int dim_num, double x[] ), int dim_num,
   double a[], double b[], int *eval_num )
 
 /******************************************************************************/

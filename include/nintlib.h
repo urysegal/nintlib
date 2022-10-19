@@ -1,9 +1,8 @@
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <complex>
 
+typedef std::complex<double> eval_func(int dim_num, double x[]);
 
 double box_nd(double func(int dim_num, double x[]), int dim_num,
               int order, double xtab[], double weight[], int *eval_num);
@@ -11,8 +10,9 @@ int i4_huge(void);
 int i4_power(int i, int j);
 double monte_carlo_nd(double func(int dim_num, double x[]), int dim_num,
                       double a[], double b[], int eval_num, int *seed);
-double p5_nd(double func(int dim_num, double x[]), int dim_num,
+std::complex<double> p5_nd(eval_func, int dim_num,
              double a[], double b[], int *eval_num);
+
 double r8_abs(double x);
 double r8_epsilon(void);
 double *r8vec_uniform_01_new(int n, int *seed);
@@ -27,7 +27,4 @@ double sum2_nd(double func(int dim_num, double x[]), double xtab[],
 void timestamp(void);
 void tuple_next(int m1, int m2, int n, int *rank, int x[]);
 
-#ifdef __cplusplus
-}
-#endif
 
