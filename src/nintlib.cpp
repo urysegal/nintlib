@@ -316,8 +316,8 @@ double monte_carlo_nd ( double func ( int dim_num, double x[] ), int dim_num,
 }
 /******************************************************************************/
 
-double p5_nd ( double func ( int dim_num, double x[] ), int dim_num,
-  double a[], double b[], int *eval_num )
+std::complex<double> p5_nd(eval_func func, int dim_num,
+                           double a[], double b[], int *eval_num)
 
 /******************************************************************************/
 /*
@@ -376,10 +376,10 @@ double p5_nd ( double func ( int dim_num, double x[] ), int dim_num,
   double en;
   int i;
   int j;
-  double result;
-  double sum1;
-  double sum2;
-  double sum3;
+    std::complex<double> result;
+    std::complex<double> sum1;
+    std::complex<double> sum2;
+    std::complex<double> sum3;
   double volume;
   double *work;
 

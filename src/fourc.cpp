@@ -25,8 +25,8 @@ calculate_one_value( int dim_num, double x[] )
 {
     Quantum_Numbers quantum_numbers = {2,1,0};
 
-    STO_Basis_Function_Info inf1(43.5, 0.252, quantum_numbers);
-    STO_Basis_Function_Info inf2(3.15, 0.952, quantum_numbers);
+    STO_Basis_Function_Info inf1( 0.252, quantum_numbers);
+    STO_Basis_Function_Info inf2( 0.952, quantum_numbers);
 
     STO_Basis_Function f1(inf1, {0, 0, -0.14142136});
     STO_Basis_Function f2(inf2, {0.70710678, 0, 0.56568542});
