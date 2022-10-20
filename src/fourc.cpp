@@ -3,7 +3,6 @@
 #include <math.h>
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
-#include <boost/math/special_functions.hpp>
 
 #include "libslater/libslater.h"
 
@@ -41,17 +40,23 @@ calculate_one_value( int dim_num, double x[] )
             exp(-x[6]*distance_squared(r1,r2))*(1.0/sqrt(x[6]));
 }
 
+
+const double range_max = 1E1;
+
 int
 main()
 {
-
-
     int eval_num = 0;
     double a[7] = {0};
-    double b[7] = {1,1,1,1,1,1,1};
+    double b[7] = {0};
+
+    for ( int i = 0 ; i < 7 ; ++i ) {
+        a[i] = -range_max;
+        b[i] = range_max;
+    }
 
     auto res = p5_nd(calculate_one_value, 7, a,b, &eval_num);
 
-    printf("Result: %f+%fi, %d points\n", res.real(), res.imag(), eval_num);
+    printf("Result: %15.15f+%15.15fi, %d points\n", res.real(), res.imag(), eval_num);
     return 0;
 }

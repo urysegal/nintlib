@@ -9,11 +9,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(COMPILE_FLAGS -Wall -Werror -fsanitize=address  -fno-omit-frame-pointer -pthread)
-set(LINK_FLAGS -fsanitize=address -lm -L /home/urysegal/libslater/cmake-build-debug -llibslater )
+set(LINK_FLAGS -fsanitize=address -lm -llibslater)
 
 find_package(PkgConfig)
-
-project(GTestProject)
 
 include(ExternalProject)
 
@@ -39,3 +37,4 @@ target_include_directories(fourc PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(fourc PUBLIC ${COMPILE_FLAGS})
 target_link_options(fourc PUBLIC ${LINK_FLAGS})
 
+target_link_libraries(fourc -llibslater -lgcov)
