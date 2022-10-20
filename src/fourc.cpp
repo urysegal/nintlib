@@ -5,7 +5,7 @@
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/math/special_functions.hpp>
 
-#include "/home/urysegal/libslater/libslater.h"
+#include "libslater/libslater.h"
 
 
 using namespace slater;

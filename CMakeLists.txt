@@ -13,10 +13,28 @@ set(LINK_FLAGS -fsanitize=address -lm -L /home/urysegal/libslater/cmake-build-de
 
 find_package(PkgConfig)
 
-include_directories(${fourc_SOURCE_DIR} ${fourc_SOURCE_DIR}/include /home/urysegal/libslater)
+project(GTestProject)
+
+include(ExternalProject)
+
+set(EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
+
+ExternalProject_Add(libslater
+        GIT_REPOSITORY https://github.com/urysegal/libslater.git
+        GIT_TAG main
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+        )
+
+include_directories(${EXTERNAL_INSTALL_LOCATION}/include)
+link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
+
+include_directories(${fourc_SOURCE_DIR} ${fourc_SOURCE_DIR}/include )
 
 
 add_executable(fourc src/nintlib.cpp include/nintlib.h src/fourc.cpp)
+
+add_dependencies(fourc libslater)
+
 target_include_directories(fourc PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_options(fourc PUBLIC ${COMPILE_FLAGS})
 target_link_options(fourc PUBLIC ${LINK_FLAGS})
