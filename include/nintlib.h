@@ -2,7 +2,7 @@
 
 #include <complex>
 
-typedef std::complex<double> eval_func(int dim_num, double x[]);
+typedef std::complex<double> eval_func(int dim_num, double x[], double shift);
 
 double box_nd(double func(int dim_num, double x[]), int dim_num,
               int order, double xtab[], double weight[], int *eval_num);

@@ -20,8 +20,9 @@ double distance_squared(const center_t &A, const center_t &B)
 
 
 std::complex<double>
-calculate_one_value( int dim_num, double x[] )
-{
+calculate_one_value( int dim_num, double x[], double shift )
+{   
+    x[6] = shift - x[6];
     Quantum_Numbers quantum_numbers = {2,1,0};
 
     STO_Basis_Function_Info inf1( 0.252, quantum_numbers);
@@ -37,7 +38,7 @@ calculate_one_value( int dim_num, double x[] )
 
     return f1.evaluate_conjugate(r1) * f3.evaluate_conjugate(r2) *
            f2.evaluate(r1) * f4.evaluate(r2) *
-            exp(-x[6]*distance_squared(r1,r2))*(1.0/sqrt(x[6]));
+            (1.0/sqrt(std::numbers::pi))*exp(-x[6]*x[6]*distance_squared(r1,r2));
 }
 
 

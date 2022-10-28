@@ -115,7 +115,7 @@ std::complex<double> box_nd ( eval_func func, int dim_num,
       x[dim] = xtab[indx[dim]-1];
     }
 
-    result = result + w * func ( dim_num, x );
+    result = result + w * func ( dim_num, x, 0.0 );
     *eval_num = *eval_num + 1;
   }
 
@@ -421,7 +421,7 @@ std::complex<double> p5_nd(eval_func func, int dim_num,
     return result;
   }
  
-  sum1 = a0 * func ( dim_num, work );
+  sum1 = a0 * func ( dim_num, work, a[6] );
   *eval_num = *eval_num + 1;
 
   sum2 = 0.0;
@@ -430,11 +430,11 @@ std::complex<double> p5_nd(eval_func func, int dim_num,
   for ( i = 0; i < dim_num; i++ )
   {
     work[i] = 0.5 * ( ( a[i] + b[i] ) + a3 * ( b[i] - a[i] ) );
-    sum2 = sum2 + func ( dim_num, work );
+    sum2 = sum2 + func ( dim_num, work, a[6] );
     *eval_num = *eval_num + 1;
 
     work[i] = 0.5 * ( ( a[i] + b[i] ) - a3 * ( b[i] - a[i] ) );
-    sum2 = sum2 + func ( dim_num, work );
+    sum2 = sum2 + func ( dim_num, work , a[6]);
     *eval_num = *eval_num + 1;
 
     work[i] = 0.5 * ( a[i] + b[i] );
@@ -456,7 +456,7 @@ std::complex<double> p5_nd(eval_func func, int dim_num,
           for ( j = i + 1; j < dim_num; j++ )
           {
             work[j] = 0.5 * ( ( a[j] + b[j] ) + a5 * ( b[j] - a[j] ) );
-            sum3 = sum3 + func ( dim_num, work );
+            sum3 = sum3 + func ( dim_num, work, a[6] );
             *eval_num = *eval_num + 1;
             work[j] = 0.5 * ( a[j]+ b[j] );
           }
