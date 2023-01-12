@@ -22,7 +22,7 @@ double distance_squared(const center_t &A, const center_t &B)
 std::complex<double>
 calculate_one_value( int dim_num, double x[], double shift )
 {   
-    x[6] = shift - x[6];
+    x[6] = x[6] - shift;
     
     Quantum_Numbers quantum_numbers = {1,0,0};
 
@@ -51,17 +51,18 @@ calculate_one_value( int dim_num, double x[], double shift )
 }
 
 
-const double range_max = 0.5;
+const double range_max = 10;
 
 int
 main()
 {
     int eval_num = 0;
     int dim_num = 7;
-    double a[7] = {0};
-    double b[7] = {0};
+    
+    double a[dim_num] = {0};
+    double b[dim_num] = {0};
 
-    for ( int i = 0 ; i < 7 ; ++i ) {
+    for ( int i = 0 ; i < dim_num ; ++i ) {
         a[i] = -range_max;
         b[i] = range_max;
     }
@@ -104,20 +105,15 @@ main()
 # undef ORDER
    
    /* Romberg */
-   int* sub_num;
-   int dim;
-   int it_max = 3;
    int ind;
-   double tol;
-   
-   sub_num = ( int * ) malloc ( dim_num * sizeof ( int ) );
+   double tol = 0.001;
+   int it_max = 3;
+   int sub_num[dim_num] = {0};
+   for ( int i = 0 ; i < dim_num ; ++i ) {
+        sub_num[i] = 5;
+    }
 
-  tol = 0.001;
-  for ( dim = 0; dim < dim_num; dim++ )
-  {
-    sub_num[dim] = 10;
-  }
-  auto res3 = romberg_nd ( calculate_one_value, a, b, 7, sub_num, it_max, tol,
+  auto res3 = romberg_nd ( calculate_one_value, a, b, dim_num, sub_num, it_max, tol,
     &ind, &eval_num );
 printf("Result romberg_nd: %15.15f+%15.15fi, %d points\n", res3.real(), res3.imag(), eval_num);
     return 0;
