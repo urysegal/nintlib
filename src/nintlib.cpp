@@ -806,7 +806,7 @@ std::complex<double> romberg_nd ( eval_func func, double a[],
   iwork = ( int * ) malloc ( dim_num * sizeof ( int ) );
   iwork2 = ( int * ) malloc ( it_max * sizeof ( int ) );
   sub_num2 = ( int * ) malloc ( dim_num * sizeof ( int ) );
-  table = ( std::complex<double> * ) malloc ( it_max * sizeof ( double ) );
+  table = ( std::complex<double> * ) malloc ( it_max * sizeof ( std::complex<double> ) );
   x = ( double * ) malloc ( dim_num * sizeof ( double ) );
 
   *ind = 0;

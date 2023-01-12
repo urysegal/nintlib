@@ -38,20 +38,21 @@ calculate_one_value( int dim_num, double x[], double shift )
     STO_Basis_Function_Info inf2( 1.625, quantum_numbers);
 
     STO_Basis_Function f1(inf1, {0, 0, 0});
-    STO_Basis_Function f2(inf2, {0, 0, 0});
-    STO_Basis_Function f3(inf1, {0, 0, 0});
-    STO_Basis_Function f4(inf2, {0, 0, 0});
+    STO_Basis_Function f2(inf2, {1, 0, 0});
+    STO_Basis_Function f3(inf1, {2, 0, 0});
+    STO_Basis_Function f4(inf2, {3, 0, 0});
 
     center_t r1 = {x[0], x[1], x[2]};
     center_t r2 = {x[3], x[4], x[5]};
 
-    return f1.evaluate_conjugate(r1) * f3.evaluate_conjugate(r2) *
+    auto result = f1.evaluate_conjugate(r1) * f3.evaluate_conjugate(r2) *
            f2.evaluate(r1) * f4.evaluate(r2) *
             (1.0/sqrt(std::numbers::pi))*exp(-x[6]*x[6]*distance_squared(r1,r2));
+    return result;
 }
 
 
-const double range_max = 10;
+const double range_max = 5;
 
 int
 main()
@@ -69,11 +70,12 @@ main()
 	
     /* p5_nd */
     
-    auto res = p5_nd(calculate_one_value, 7, a,b, &eval_num);
+//    auto res = p5_nd(calculate_one_value, 7, a,b, &eval_num);
 
-    printf("Result p5_nd: %15.15f+%15.15fi, %d points\n", res.real(), res.imag(), eval_num);
+  //  printf("Result p5_nd: %15.15f+%15.15fi, %d points\n", res.real(), res.imag(), eval_num);
     
     /* Box_nd*/
+#if 0
 # define ORDER 5
     int j;
     double wtab[ORDER] = {
@@ -103,8 +105,9 @@ main()
    auto res2 = box_nd ( calculate_one_value, 7, a, ORDER, xtab2, wtab2, &eval_num );
    printf("Result box_nd: %15.15f+%15.15fi, %d points\n", res2.real(), res2.imag(), eval_num);
 # undef ORDER
-   
-   /* Romberg */
+#endif
+
+    /* Romberg */
    int ind;
    double tol = 0.001;
    int it_max = 3;

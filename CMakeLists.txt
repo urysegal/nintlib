@@ -21,6 +21,7 @@ ExternalProject_Add(libslater
         GIT_REPOSITORY https://github.com/urysegal/libslater.git
         GIT_TAG main
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+        CMAKE_ARGS -DCMAKE_BUILD_TYPE=DEBUG
         )
 
 include_directories(${EXTERNAL_INSTALL_LOCATION}/include)
