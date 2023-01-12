@@ -7,7 +7,7 @@
 
 /******************************************************************************/
 
-std::complex<double> box_nd ( eval_func func, int dim_num,
+std::complex<double> box_nd ( eval_func func, int dim_num, double a[],
   int order, double xtab[], double weight[], int *eval_num )
 
 /******************************************************************************/
@@ -115,7 +115,7 @@ std::complex<double> box_nd ( eval_func func, int dim_num,
       x[dim] = xtab[indx[dim]-1];
     }
 
-    result = result + w * func ( dim_num, x, 0.0 );
+    result = result + w * func ( dim_num, x, a[6] );
     *eval_num = *eval_num + 1;
   }
 
@@ -669,7 +669,7 @@ double *r8vec_uniform_01_new ( int n, int *seed )
 }
 /******************************************************************************/
 
-double romberg_nd ( double func ( int dim_num, double x[] ), double a[], 
+std::complex<double> romberg_nd ( eval_func func, double a[], 
   double b[], int dim_num, int sub_num[], int it_max, double tol, int *ind, 
   int *eval_num )
 
@@ -763,13 +763,13 @@ double romberg_nd ( double func ( int dim_num, double x[] ), double a[],
   int *iwork2;
   int kdim;
   int ll;
-  double result;
-  double result_old;
+  std::complex<double> result;
+  std::complex<double> result_old;
   double rnderr;
   int *sub_num2;
-  double sum1;
+  std::complex<double> sum1;
   double weight;
-  double *table;
+  std::complex<double> *table;
   double *x;
 
   *eval_num = 0;
@@ -806,7 +806,7 @@ double romberg_nd ( double func ( int dim_num, double x[] ), double a[],
   iwork = ( int * ) malloc ( dim_num * sizeof ( int ) );
   iwork2 = ( int * ) malloc ( it_max * sizeof ( int ) );
   sub_num2 = ( int * ) malloc ( dim_num * sizeof ( int ) );
-  table = ( double * ) malloc ( it_max * sizeof ( double ) );
+  table = ( std::complex<double> * ) malloc ( it_max * sizeof ( double ) );
   x = ( double * ) malloc ( dim_num * sizeof ( double ) );
 
   *ind = 0;
@@ -851,7 +851,7 @@ double romberg_nd ( double func ( int dim_num, double x[] ), double a[],
          / ( double ) ( 2 * sub_num2[dim]                      );
       }
 
-      sum1 = sum1 + func ( dim_num, x );
+      sum1 = sum1 + func ( dim_num, x, a[6] );
       *eval_num = *eval_num + 1;
 
       kdim = dim_num;
@@ -910,7 +910,7 @@ double romberg_nd ( double func ( int dim_num, double x[] ), double a[],
 /*
   Terminate successfully if the estimated error is acceptable.
 */
-    if ( r8_abs ( result - result_old ) <= r8_abs ( result * ( tol + rnderr ) ) )
+    if ( r8_abs ( result.real() - result_old.real() ) <= r8_abs ( result.real() * ( tol + rnderr ) ) )
     {
       *ind = 1;
       break;
